@@ -1,5 +1,6 @@
 # ukljucivanje biblioteke pygame
 import pygame
+import random
 
 #inicijalizacija pygame
 pygame.init()
@@ -28,8 +29,7 @@ welcome_text_size = welcome_text.get_rect()
 welcome_image = pygame.image.load( \
         "shark.jpg")
 
-hamster = pygame.image.load( \
-        "hamster.png")
+hamster = pygame.image.load("hamster.png")
 hamster = pygame.transform.scale(hamster, \
                             (100, 100) )
 
@@ -44,6 +44,8 @@ clock = pygame.time.Clock()
 game_state = "welcome"
 
 done = False
+hamster_time  = 3000
+hamster_x, hamster_y = 100, 100
 while not done:
     #event petlja
     for event in pygame.event.get():
@@ -58,8 +60,16 @@ while not done:
         screen.blit(welcome_image, (0,0) )
         screen.blit(welcome_text, ( 100, 100) )
     elif game_state == "game":
+        hamster_time = \
+              hamster_time - clock.get_time()
+        if hamster_time < 0 :
+            hamster_time = 3000
+            hamster_x = random.randint(20, WIDTH)
+            hamster_y = random.randint(20, HEIGHT)
+
         screen.fill(WHITE)
-        screen.blit(hamster, (100, 100))
+        screen.blit(hamster, \
+                (hamster_x, hamster_y))
 
 
     pygame.display.flip()
