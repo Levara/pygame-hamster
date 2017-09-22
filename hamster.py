@@ -44,6 +44,7 @@ clock = pygame.time.Clock()
 game_state = "welcome"
 
 done = False
+hit  = False
 hamster_time  = 3000
 hamster_x, hamster_y = 100, 100
 while not done:
@@ -54,22 +55,34 @@ while not done:
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 game_state = "game"
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            if game_state == "game":
+                pos = event.pos
+                if hamster_pos.collidepoint(pos):
+                    hit = True
+
 
     if game_state == "welcome":
         screen.fill(WHITE)
         screen.blit(welcome_image, (0,0) )
         screen.blit(welcome_text, ( 100, 100) )
     elif game_state == "game":
-        hamster_time = \
-              hamster_time - clock.get_time()
-        if hamster_time < 0 :
+        if hit:
             hamster_time = 3000
             hamster_x = random.randint(20, WIDTH)
             hamster_y = random.randint(20, HEIGHT)
+            hit = False
+
+        if hamster_time < 0 :
+            game_state = "game_over"
 
         screen.fill(WHITE)
-        screen.blit(hamster, \
+        hamster_pos = screen.blit(hamster, \
                 (hamster_x, hamster_y))
+
+        hamster_time = hamster_time - clock.get_time()
+    elif game_state == "game_over":
+        screen.fill(BLACK)
 
 
     pygame.display.flip()
