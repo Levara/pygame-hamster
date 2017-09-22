@@ -47,6 +47,9 @@ done = False
 hit  = False
 hamster_time  = 3000
 hamster_x, hamster_y = 100, 100
+
+score = 0
+
 while not done:
     #event petlja
     for event in pygame.event.get():
@@ -72,6 +75,7 @@ while not done:
             hamster_x = random.randint(20, WIDTH)
             hamster_y = random.randint(20, HEIGHT)
             hit = False
+            score += 1
 
         if hamster_time < 0 :
             game_state = "game_over"
@@ -79,6 +83,10 @@ while not done:
         screen.fill(WHITE)
         hamster_pos = screen.blit(hamster, \
                 (hamster_x, hamster_y))
+        score_text = \
+                myfont.render("Score: %d!"%score, \
+                False, BLUE)
+        screen.blit(score_text, (10, 10) )
 
         hamster_time = hamster_time - clock.get_time()
     elif game_state == "game_over":
