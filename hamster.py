@@ -1,12 +1,29 @@
 # ukljucivanje biblioteke pygame
 import pygame
 
+#inicijalizacija pygame
 pygame.init()
+#inicijalizacije fontova
+pygame.font.init()
+
+
 # definiranje konstanti za velicinu prozora
 WIDTH = 1024
 HEIGHT = 600
 # tuple velicine prozora
 size = (WIDTH, HEIGHT)
+
+#definiranje boja - guglaj colorpicker
+WHITE= ( 255, 255, 255)
+BLACK= ( 0,   0,   0  )
+BLUE = (0,    0,   255)
+
+#Renderiranje pozdravnog teksta
+myfont = pygame.font.SysFont('Arial', 30)
+welcome_text = myfont.render("Dobrodosli!", \
+                            False, BLUE)
+#daj mi velicinu welcome teksta
+welcome_text_size = welcome_text.get_rect()
 
 #definiranje novog ekrana za igru
 screen = pygame.display.set_mode(size)
@@ -21,6 +38,10 @@ while not done:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = True
+
+    screen.fill(WHITE)
+    screen.blit(welcome_text, ( 100, 100) )
+
 
     pygame.display.flip()
     
