@@ -35,16 +35,24 @@ pygame.display.set_caption("Nasa kul igra")
 
 clock = pygame.time.Clock()
 
+game_state = "welcome"
+
 done = False
 while not done:
     #event petlja
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = True
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                game_state = "game"
 
-    screen.fill(WHITE)
-    screen.blit(welcome_image, (0,0) )
-    screen.blit(welcome_text, ( 100, 100) )
+    if game_state == "welcome":
+        screen.fill(WHITE)
+        screen.blit(welcome_image, (0,0) )
+        screen.blit(welcome_text, ( 100, 100) )
+    elif game_state == "game":
+        screen.fill(BLUE)
 
 
     pygame.display.flip()
