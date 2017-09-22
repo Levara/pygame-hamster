@@ -28,6 +28,12 @@ welcome_text_size = welcome_text.get_rect()
 welcome_image = pygame.image.load( \
         "shark.jpg")
 
+hamster = pygame.image.load( \
+        "hamster.png")
+hamster = pygame.transform.scale(hamster, \
+                            (100, 100) )
+
+
 #definiranje novog ekrana za igru
 screen = pygame.display.set_mode(size)
 #definiranje naziva prozora
@@ -52,7 +58,8 @@ while not done:
         screen.blit(welcome_image, (0,0) )
         screen.blit(welcome_text, ( 100, 100) )
     elif game_state == "game":
-        screen.fill(BLUE)
+        screen.fill(WHITE)
+        screen.blit(hamster, (100, 100))
 
 
     pygame.display.flip()
