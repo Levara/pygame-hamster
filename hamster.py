@@ -25,6 +25,9 @@ welcome_text = myfont.render("Dobrodosli!", \
 #daj mi velicinu welcome teksta
 welcome_text_size = welcome_text.get_rect()
 
+welcome_image = pygame.image.load( \
+        "shark.jpg")
+
 #definiranje novog ekrana za igru
 screen = pygame.display.set_mode(size)
 #definiranje naziva prozora
@@ -40,6 +43,7 @@ while not done:
             done = True
 
     screen.fill(WHITE)
+    screen.blit(welcome_image, (0,0) )
     screen.blit(welcome_text, ( 100, 100) )
 
 
