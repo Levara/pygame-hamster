@@ -1,6 +1,6 @@
 # pygame-hamster
 ## Radionica: Računalna igra u Pythonu
-## @FERIT Osijek, 22.9.2017.
+## @FERIT Osijek, 22.9. i 23.9..2017.
 
 ### Podešavanje računala
 
@@ -15,7 +15,8 @@ i PyGame paket.
 ponuditi program koji se zove **Command Prompt**.
 
 3. U **Command Prompt** prozor upišite tekst:
-       pip install pygame
+
+         pip install pygame
 
     I pritisnite tipku **ENTER**.
 
