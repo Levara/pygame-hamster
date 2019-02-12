@@ -2,11 +2,17 @@ import pygame
 import random
 import sys
 
+#### GLOBALNE VARIJABLE
+WIDTH = 800
+HEIGHT = 600
+
+
+# inicijalizacija pygame sustava
 pygame.init()
 
 pygame.font.init()
 
-pygame.display.set_mode( (1024, 600) )
+pygame.display.set_mode( (WIDTH, HEIGHT) )
 
 clock = pygame.time.Clock()
 
