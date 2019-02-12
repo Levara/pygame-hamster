@@ -13,6 +13,7 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
 welcome_image = pygame.image.load("radionica-petak/shark.jpg")
+start_game_image = pygame.image.load("start_game.png")
 
 # inicijalizacija pygame sustava
 pygame.init()
@@ -28,6 +29,7 @@ pygame.display.set_caption("LABUS igraa!")
 
 clock = pygame.time.Clock()
 
+#### STANJA U IGRI: start, game, score, bye
 game_state = "start"
 next_state = False
 done = False
@@ -37,10 +39,16 @@ while not done:
         if event.type == pygame.QUIT:
             done = True
         elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE:
-                next_state = True 
+            #if event.key == pygame.K_SPACE:
+                #next_state = True 
             if event.key == pygame.K_q:
                 done = True
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            pos = event.pos
+            if game_state == "start":
+                if start_game_pos.collidepoint(pos):
+                    next_state = True
+
     #Provjera i promjena stanja
     if next_state:
         next_state = False
@@ -57,7 +65,8 @@ while not done:
     if game_state == "start":
         screen.fill( WHITE )
         screen.blit( welcome_image, (0,0))
-        screen.blit( welcome_text, (WIDTH/2, HEIGHT/2))
+        start_game_pos = screen.blit( start_game_image, (WIDTH/2,HEIGHT/2))
+        screen.blit( welcome_text, (WIDTH/2, 50))
     elif game_state == "red":
         screen.fill( RED )
     elif game_state == "green":
