@@ -51,6 +51,8 @@ game_state = "start"
 next_state = False
 #Varijabla trajanja score ekrana
 score_time = 5000
+#Varijabla za restart igre nakon zavrsetka
+restart = False
 done = False
 while not done:
     #event petlja
@@ -58,8 +60,8 @@ while not done:
         if event.type == pygame.QUIT:
             done = True
         elif event.type == pygame.KEYDOWN:
-            #if event.key == pygame.K_SPACE:
-                #next_state = True 
+            if event.key == pygame.K_SPACE and game_state == "bye":
+                restart = True 
             if event.key == pygame.K_q:
                 done = True
         elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -121,6 +123,15 @@ while not done:
 
     elif game_state == "bye":
         screen.fill( BLUE )
+        restart_text = myfont.render("Press space to restart", False, WHITE)
+        screen.blit( restart_text, (10, 10))
+        if restart: 
+            restart = False
+            hamster_time = 3000
+            score = 0
+            score_time = 5000
+            next_state = True
+
 
     pygame.display.flip()
     dt = clock.tick(60)
