@@ -12,7 +12,8 @@ pygame.init()
 
 pygame.font.init()
 
-pygame.display.set_mode( (WIDTH, HEIGHT) )
+screen = pygame.display.set_mode( (WIDTH, HEIGHT) )
+pygame.display.set_caption("LABUS igraa!")
 
 clock = pygame.time.Clock()
 
@@ -22,6 +23,9 @@ while not done:
         if event.type == pygame.QUIT:
             done = True
 
+    screen.fill( (255,0,0) )
+
+    pygame.display.flip()
     clock.tick(60)
 
 pygame.quit()
