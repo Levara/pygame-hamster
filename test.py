@@ -29,6 +29,7 @@ welcome_text = myfont.render("Welcomeee!", False, BLACK)
 
 #Odabir fonta za tekst rezultata
 score_font = pygame.font.SysFont('Arial', 20)
+time_font = pygame.font.SysFont('Arial', 18)
 
 screen = pygame.display.set_mode( (WIDTH, HEIGHT) )
 pygame.display.set_caption("LABUS igraa!")
@@ -40,6 +41,8 @@ score = 0
 # Varijable koje prate hamstera
 hamster_x, hamster_y = 100, 100
 hit = False  #Varijabla koja se postavlja kada se klikne na hamstera
+hamster_time = 3000
+dt = 0
 #### STANJA U IGRI: start, game, score, bye
 game_state = "start"
 next_state = False
@@ -85,7 +88,9 @@ while not done:
     elif game_state == "game":
         screen.fill( BLACK )
         score_text = myfont.render("Score: " + str(score), False, WHITE)
+        time_text = time_font.render("Time: " + str(hamster_time), False, WHITE)
         screen.blit( score_text, (10, 10))
+        screen.blit( time_text, (10, HEIGHT - 20))
 
         # Iscrtaj hamstera na ekran
         hamster_pos = screen.blit( hamster_image, (hamster_x, hamster_y))
@@ -95,6 +100,10 @@ while not done:
             hamster_x = random.randint(100, WIDTH - 100)
             hamster_y = random.randint(100, HEIGHT - 100)
             score += 1
+            hamster_time = 3000
+        hamster_time -= dt
+        if hamster_time <= 0:
+            next_state = True
 
         
 
@@ -104,7 +113,7 @@ while not done:
         screen.fill( BLUE )
 
     pygame.display.flip()
-    clock.tick(60)
+    dt = clock.tick(60)
 
 pygame.quit()
 sys.exit()
