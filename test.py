@@ -44,6 +44,7 @@ score = 0
 # Varijable koje prate hamstera
 hamster_x, hamster_y = 100, 100
 hit = False  #Varijabla koja se postavlja kada se klikne na hamstera
+original_hamster_time = 3000
 hamster_time = 3000
 dt = 0
 #### STANJA U IGRI: start, game, score, bye
@@ -107,7 +108,8 @@ while not done:
             hamster_x = random.randint(100, WIDTH - 100)
             hamster_y = random.randint(100, HEIGHT - 100)
             score += 1
-            hamster_time = 3000
+            hamster_time = 0.95*original_hamster_time
+            original_hamster_time = hamster_time
         hamster_time -= dt
         if hamster_time <= 0:
             next_state = True
@@ -128,6 +130,7 @@ while not done:
         if restart: 
             restart = False
             hamster_time = 3000
+            original_hamster_time = 3000
             score = 0
             score_time = 5000
             next_state = True
