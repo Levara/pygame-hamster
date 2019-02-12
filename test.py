@@ -31,6 +31,9 @@ welcome_text = myfont.render("Welcomeee!", False, BLACK)
 score_font = pygame.font.SysFont('Arial', 20)
 time_font = pygame.font.SysFont('Arial', 18)
 
+#Score state font
+score_state_font = pygame.font.SysFont('Arial', 72)
+
 screen = pygame.display.set_mode( (WIDTH, HEIGHT) )
 pygame.display.set_caption("LABUS igraa!")
 
@@ -46,6 +49,8 @@ dt = 0
 #### STANJA U IGRI: start, game, score, bye
 game_state = "start"
 next_state = False
+#Varijabla trajanja score ekrana
+score_time = 5000
 done = False
 while not done:
     #event petlja
@@ -105,10 +110,15 @@ while not done:
         if hamster_time <= 0:
             next_state = True
 
-        
-
     elif game_state == "score":
-        screen.fill( GREEN )
+        screen.fill( WHITE )
+        score_state_text = score_state_font.render("Your score:" + str(score), True, BLUE)
+        screen.blit( score_state_text, (WIDTH/2 - score_state_text.get_width()/2, 
+                                        HEIGHT/2 - score_state_text.get_height()/2))
+        score_time -= dt
+        if score_time <= 0:
+            next_state  = True
+
     elif game_state == "bye":
         screen.fill( BLUE )
 
