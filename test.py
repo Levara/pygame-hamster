@@ -12,8 +12,11 @@ BLUE = (0, 0, 255)
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
+# Ucitavanje slika koje se koriste u igri
 welcome_image = pygame.image.load("radionica-petak/shark.jpg")
 start_game_image = pygame.image.load("start_game.png")
+hamster_image = pygame.image.load("radionica-petak/hamster.png")
+hamster_image = pygame.transform.scale(hamster_image, (100,100))
 
 # inicijalizacija pygame sustava
 pygame.init()
@@ -24,11 +27,19 @@ pygame.font.init()
 myfont = pygame.font.SysFont('Arial', 40)
 welcome_text = myfont.render("Welcomeee!", False, BLACK)
 
+#Odabir fonta za tekst rezultata
+score_font = pygame.font.SysFont('Arial', 20)
+
 screen = pygame.display.set_mode( (WIDTH, HEIGHT) )
 pygame.display.set_caption("LABUS igraa!")
 
 clock = pygame.time.Clock()
 
+# Varijabla koja prati rezultat
+score = 0
+# Varijable koje prate hamstera
+hamster_x, hamster_y = 100, 100
+hit = False  #Varijabla koja se postavlja kada se klikne na hamstera
 #### STANJA U IGRI: start, game, score, bye
 game_state = "start"
 next_state = False
@@ -48,30 +59,48 @@ while not done:
             if game_state == "start":
                 if start_game_pos.collidepoint(pos):
                     next_state = True
+            if game_state == "game":
+                if hamster_pos.collidepoint(pos):
+                    hit = True
 
     #Provjera i promjena stanja
     if next_state:
         next_state = False
         if game_state == "start":
-            game_state = "red"
-        elif game_state == "red":
-            game_state = "green"
-        elif game_state == "green":
-            game_state = "blue"
-        elif game_state == "blue":
-            game_state = "red"
+            game_state = "game"
+        elif game_state == "game":
+            game_state = "score"
+        elif game_state == "score":
+            game_state = "bye"
+        elif game_state == "bye":
+            game_state = "game"
 
     #Izmjena iscrtavanja na ekranu prema odabranom stanju
     if game_state == "start":
         screen.fill( WHITE )
         screen.blit( welcome_image, (0,0))
-        start_game_pos = screen.blit( start_game_image, (WIDTH/2,HEIGHT/2))
-        screen.blit( welcome_text, (WIDTH/2, 50))
-    elif game_state == "red":
-        screen.fill( RED )
-    elif game_state == "green":
+        button_width, button_height = start_game_image.get_size()
+        start_game_pos = screen.blit( start_game_image, (WIDTH/2-button_width/2,HEIGHT/2-button_height/2))
+        screen.blit( welcome_text, (50, 50))
+    elif game_state == "game":
+        screen.fill( BLACK )
+        score_text = myfont.render("Score: " + str(score), False, WHITE)
+        screen.blit( score_text, (10, 10))
+
+        # Iscrtaj hamstera na ekran
+        hamster_pos = screen.blit( hamster_image, (hamster_x, hamster_y))
+
+        if hit:
+            hit = False
+            hamster_x = random.randint(100, WIDTH - 100)
+            hamster_y = random.randint(100, HEIGHT - 100)
+            score += 1
+
+        
+
+    elif game_state == "score":
         screen.fill( GREEN )
-    elif game_state == "blue":
+    elif game_state == "bye":
         screen.fill( BLUE )
 
     pygame.display.flip()
